@@ -1,0 +1,42 @@
+.register {
+  padding-top: 20px;
+}
+
+.register__title {
+  font-size: 24px;
+  text-align: center;
+  margin: 0 0 50px 0;
+}
+
+.register__fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: auto;
+  width: fit-content;
+  border: none;
+}
+
+.register__form-field:first-of-type {
+  margin-bottom: 30px;
+}
+
+.register__form-field:last-of-type {
+  margin-bottom: 216px;
+}
+
+.register__signin-text {
+  font-size: 14px;
+  text-align: center;
+}
+
+.register__signin-link {
+  margin-left: 4px;
+  text-decoration: none;
+  color: #fff;
+  transition: color linear 0.2s;
+}
+
+.register__signin-link:hover {
+  color: rgba(255, 255, 255, 0.6);
+}

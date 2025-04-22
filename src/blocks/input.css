@@ -1,5 +1,6 @@
 .input {
   box-sizing: border-box;
+  background-color: transparent;
   height: 27.26px;
   font-size: 14px;
   line-height: 1.21;
@@ -10,6 +11,16 @@
 
 .input::placeholder {
   color: rgba(0, 0, 0, 0.2);
+}
+
+.input_auth {
+  color: #fff;
+  border-bottom: 1px solid #ccc;
+  width: 358px;
+}
+
+.input_auth::placeholder {
+  color: #ccc;
 }
 
 .input__popup_type_error {

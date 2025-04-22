@@ -13,6 +13,13 @@
   opacity: 60%;
 }
 
+.button_auth {
+  background-color: #fff;
+  color: #000;
+  width: 358px;
+  height: 50px;
+}
+
 .button_edit {
   background: url("../images/edit_icon.svg") center no-repeat;
   background-size: 10px;

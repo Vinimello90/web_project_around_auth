@@ -4,7 +4,7 @@ import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 import { api } from "../utils/Api";
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "./Login/Login";
@@ -135,6 +135,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />
       </div>

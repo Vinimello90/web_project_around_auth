@@ -1,0 +1,42 @@
+.login {
+  padding-top: 20px;
+}
+
+.login__title {
+  font-size: 24px;
+  text-align: center;
+  margin: 0 0 50px 0;
+}
+
+.login__fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: auto;
+  width: fit-content;
+  border: none;
+}
+
+.login__form-field:first-of-type {
+  margin-bottom: 30px;
+}
+
+.login__form-field:last-of-type {
+  margin-bottom: 216px;
+}
+
+.login__signup-text {
+  font-size: 14px;
+  text-align: center;
+}
+
+.login__signup-link {
+  margin-left: 4px;
+  text-decoration: none;
+  color: #fff;
+  transition: color linear 0.2s;
+}
+
+.login__signup-link:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
