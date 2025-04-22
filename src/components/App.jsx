@@ -4,9 +4,14 @@ import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 import { api } from "../utils/Api";
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import ProtectedRoute from "./ProtectedRoute";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [currentUser, setCurrentUser] = useState("");
   const [popup, setPopup] = useState("");
   const [cards, setCards] = useState([]);
@@ -97,15 +102,40 @@ export default function App() {
     >
       <div className="page">
         <Header />
-        <Main
-          onOpenPopup={handleOpenPopup}
-          onClosePopup={handleClosePopup}
-          popup={popup}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          onAddPlaceSubmit={handleAddPlaceSubmit}
-          cards={cards}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <Main
+                  onOpenPopup={handleOpenPopup}
+                  onClosePopup={handleClosePopup}
+                  popup={popup}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                  onAddPlaceSubmit={handleAddPlaceSubmit}
+                  cards={cards}
+                />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn} anonymous>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn} anonymous>
+                <Register />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
         <Footer />
       </div>
     </CurrentUserContext.Provider>
