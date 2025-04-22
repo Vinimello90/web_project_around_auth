@@ -1,4 +1,7 @@
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   max-width: 880px;
   width: 100%;
   padding: 45px 0 41px;
@@ -8,6 +11,28 @@
 
 .header__logo {
   width: 173px;
+}
+
+.header__user {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+}
+
+.header__e-mail {
+  font-size: 18px;
+  margin: 0;
+}
+
+.header__link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 0;
+}
+
+.header__link:hover {
+  opacity: 60%;
 }
 
 @media screen and (max-width: 1024px) {

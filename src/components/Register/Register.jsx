@@ -14,6 +14,7 @@ export default function Register() {
                 id="email"
                 className="input input_auth"
                 placeholder="E-mail"
+                spellCheck={false}
                 required
               />
             </label>
@@ -24,10 +25,11 @@ export default function Register() {
                 id="password"
                 className="input input_auth"
                 placeholder="Senha"
+                spellCheck={false}
                 required
               />
             </label>
-            <button type="submit" className="button button_auth">
+            <button type="submit" className="button button_auth-submit">
               Inscrever-se
             </button>
           </fieldset>

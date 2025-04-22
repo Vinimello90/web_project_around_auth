@@ -1,11 +1,11 @@
 import { Link } from "react-router";
 
-export default function Login() {
+export default function Login({ formRef }) {
   return (
     <main className="main">
       <section className="login">
         <h1 className="login__title">Entrar</h1>
-        <form action="get" className="login__form">
+        <form ref={formRef} action="get" className="login__form">
           <fieldset className="login__fieldset">
             <label className="login__form-field">
               <input
@@ -14,6 +14,7 @@ export default function Login() {
                 id="email"
                 className="input input_auth"
                 placeholder="E-mail"
+                spellCheck={false}
                 required
               />
             </label>
@@ -24,10 +25,11 @@ export default function Login() {
                 id="password"
                 className="input input_auth"
                 placeholder="Senha"
+                spellCheck={false}
                 required
               />
             </label>
-            <button type="submit" className="button button_auth">
+            <button type="submit" className="button button_auth-submit">
               Entrar
             </button>
           </fieldset>

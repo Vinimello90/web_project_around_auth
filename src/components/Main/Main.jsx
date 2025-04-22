@@ -44,7 +44,7 @@ export default function Main(props) {
           <button
             type="button"
             aria-label="Edit avatar"
-            className="profile__avatar-button"
+            className="button button_avatar"
             onClick={() => onOpenPopup(editAvatarPopup)}
           ></button>
         </div>

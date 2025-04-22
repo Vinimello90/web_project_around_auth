@@ -34,7 +34,7 @@
   margin-left: 4px;
   text-decoration: none;
   color: #fff;
-  transition: color linear 0.2s;
+  transition: color linear 0.3s;
 }
 
 .login__signup-link:hover {

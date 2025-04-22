@@ -3,7 +3,7 @@ import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 import { api } from "../utils/Api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Routes, Route, Navigate } from "react-router";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRoute from "./ProtectedRoute";
@@ -15,6 +15,7 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState("");
   const [popup, setPopup] = useState("");
   const [cards, setCards] = useState([]);
+  const formRef = useRef();
 
   useEffect(() => {
     (async () => {
@@ -92,21 +93,27 @@ export default function App() {
     }
   }
 
+  function handleSignOut() {
+    setIsLoggedIn(false);
+  }
+
   return (
     <CurrentUserContext.Provider
       value={{
         currentUserInfo: currentUser,
+        isLoggedIn,
+        onSignOut: handleSignOut,
         onUpdateUser: handleUpdateUser,
         onUpdateAvatar: handleUpdateAvatar,
       }}
     >
       <div className="page">
-        <Header />
+        <Header formRef={formRef} />
         <Routes>
           <Route
             path="/"
             element={
-              <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <ProtectedRoute>
                 <Main
                   onOpenPopup={handleOpenPopup}
                   onClosePopup={handleClosePopup}
@@ -122,20 +129,20 @@ export default function App() {
           <Route
             path="/signin"
             element={
-              <ProtectedRoute isLoggedIn={isLoggedIn} anonymous>
-                <Login />
+              <ProtectedRoute anonymous>
+                <Login formRef={formRef} />
               </ProtectedRoute>
             }
           />
           <Route
             path="/signup"
             element={
-              <ProtectedRoute isLoggedIn={isLoggedIn} anonymous>
+              <ProtectedRoute anonymous>
                 <Register />
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
       </div>
