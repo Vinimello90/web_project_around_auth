@@ -1,31 +1,60 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import Popup from "../Main/components/Popup/Popup";
+import InfoTooltip from "../Main/components/Popup/components/InfoTooltip/InfoTooltip";
 
-export default function Login({ formRef }) {
+export default function Login(props) {
+  const { formRef, onClosePopup, onSignIn, popup } = props;
+
+  const [data, setData] = useState({ password: "", email: "" });
+
+  function handleSubmitClick(e) {
+    e.preventDefault();
+    onSignIn(data);
+  }
+
+  function handleOnChange(e) {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
   return (
     <main className="main">
       <section className="login">
         <h1 className="login__title">Entrar</h1>
-        <form ref={formRef} action="get" className="login__form">
+        <form
+          onSubmit={handleSubmitClick}
+          ref={formRef}
+          action="get"
+          className="login__form"
+        >
           <fieldset className="login__fieldset">
             <label className="login__form-field">
               <input
+                onChange={handleOnChange}
                 type="email"
                 name="email"
                 id="email"
                 className="input input_auth"
                 placeholder="E-mail"
                 spellCheck={false}
+                value={data.email}
                 required
               />
             </label>
             <label className="login__form-field">
               <input
+                onChange={handleOnChange}
                 type="password"
                 name="password"
                 id="password"
                 className="input input_auth"
                 placeholder="Senha"
                 spellCheck={false}
+                value={data.password}
                 required
               />
             </label>
@@ -41,6 +70,11 @@ export default function Login({ formRef }) {
           </Link>
         </p>
       </section>
+      {popup && (
+        <Popup onClose={onClosePopup} infoTooltip>
+          {popup.children}
+        </Popup>
+      )}
     </main>
   );
 }

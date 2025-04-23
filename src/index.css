@@ -1,7 +1,6 @@
 @import url("./vendor/normalize.css");
 @import url("./vendor/fonts.css");
 @import url("./blocks/page.css");
-@import url("./blocks/popup.css");
 @import url("./blocks/header.css");
 @import url("./blocks/main.css");
 @import url("./blocks/login.css");
@@ -12,4 +11,6 @@
 @import url("./blocks/no-cards.css");
 @import url("./blocks/button.css");
 @import url("./blocks/input.css");
+@import url("./blocks/info-tooltip.css");
+@import url("./blocks/popup.css");
 @import url("./blocks/footer.css");

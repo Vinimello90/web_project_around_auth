@@ -1,14 +1,38 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import Popup from "../Main/components/Popup/Popup";
 
-export default function Register() {
+export default function Register(props) {
+  const { onClosePopup, onSignUp, popup } = props;
+
+  const [data, setData] = useState({ password: "", email: "" });
+
+  function handleSubmitClick(e) {
+    e.preventDefault();
+    onSignUp(data);
+  }
+
+  function handleOnChange(e) {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
   return (
     <main className="main">
       <section className="register">
         <h1 className="register__title">Inscreva-se</h1>
-        <form action="get" className="register__form">
+        <form
+          onSubmit={handleSubmitClick}
+          action="get"
+          className="register__form"
+        >
           <fieldset className="register__fieldset">
             <label className="register__form-field">
               <input
+                onChange={handleOnChange}
                 type="email"
                 name="email"
                 id="email"
@@ -20,6 +44,7 @@ export default function Register() {
             </label>
             <label className="register__form-field">
               <input
+                onChange={handleOnChange}
                 type="password"
                 name="password"
                 id="password"
@@ -41,6 +66,11 @@ export default function Register() {
           </Link>
         </p>
       </section>
+      {popup && (
+        <Popup onClose={onClosePopup} infoTooltip>
+          {popup.children}
+        </Popup>
+      )}
     </main>
   );
 }

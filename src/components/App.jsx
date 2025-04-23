@@ -9,9 +9,12 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
+import * as auth from "../utils/auth";
+import InfoTooltip from "./Main/components/Popup/components/InfoTooltip/InfoTooltip";
+import { setToken } from "../utils/token";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
   const [popup, setPopup] = useState("");
   const [cards, setCards] = useState([]);
@@ -93,6 +96,33 @@ export default function App() {
     }
   }
 
+  async function handleSignUp(data) {
+    try {
+      const userData = await auth.register(data);
+      setPopup({ children: <InfoTooltip /> });
+    } catch (error) {
+      let errorMessage = `Desculpe, algo deu errado! Tente novamente mais tarde.`;
+      if (error.status === 400) {
+        errorMessage = "O endereço de e-mail já está cadastrado.";
+      }
+      setPopup({ children: <InfoTooltip error={{ message: errorMessage }} /> });
+    }
+  }
+
+  async function handleSignIn(user) {
+    try {
+      const { token } = await auth.authorize(user);
+      setToken(token);
+      setIsLoggedIn(true);
+    } catch (error) {
+      let errorMessage = `Desculpe, algo deu errado! Tente novamente mais tarde.`;
+      if (error.status === 401) {
+        errorMessage = "E-mail ou senha inválida! Verifique e tente novamente.";
+      }
+      setPopup({ children: <InfoTooltip error={{ message: errorMessage }} /> });
+    }
+  }
+
   function handleSignOut() {
     setIsLoggedIn(false);
   }
@@ -102,13 +132,13 @@ export default function App() {
       value={{
         currentUserInfo: currentUser,
         isLoggedIn,
-        onSignOut: handleSignOut,
         onUpdateUser: handleUpdateUser,
         onUpdateAvatar: handleUpdateAvatar,
+        onSignOut: handleSignOut,
       }}
     >
       <div className="page">
-        <Header formRef={formRef} />
+        <Header formRef={formRef} onSignOut={handleSignOut} />
         <Routes>
           <Route
             path="/"
@@ -130,7 +160,12 @@ export default function App() {
             path="/signin"
             element={
               <ProtectedRoute anonymous>
-                <Login formRef={formRef} />
+                <Login
+                  onClosePopup={handleClosePopup}
+                  onSignIn={handleSignIn}
+                  popup={popup}
+                  formRef={formRef}
+                />
               </ProtectedRoute>
             }
           />
@@ -138,7 +173,11 @@ export default function App() {
             path="/signup"
             element={
               <ProtectedRoute anonymous>
-                <Register />
+                <Register
+                  onClosePopup={handleClosePopup}
+                  onSignUp={handleSignUp}
+                  popup={popup}
+                />
               </ProtectedRoute>
             }
           />
