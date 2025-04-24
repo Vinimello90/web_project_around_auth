@@ -1,4 +1,4 @@
-import aroundLogo from "../../images/logo.svg";
+import aroundLogo from "../../images/logo_around.svg";
 import AuthButton from "./components/AuthButton/AuthButton";
 
 export default function Header({ formRef }) {

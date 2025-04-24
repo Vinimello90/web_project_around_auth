@@ -10,7 +10,7 @@ export default function InfoTooltip({ error = false }) {
         className="info-tooltip__image"
       />
       <h2 className="info-tooltip__message">
-        {error ? error.message : "Parabéns! Agora é só fazer o login."}
+        {error ? error : "Parabéns! Agora é só fazer o login."}
       </h2>
     </div>
   );

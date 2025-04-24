@@ -1,36 +1,60 @@
 import "../index.css";
+import aroundLogo from "../images/logo_around.svg";
+import iconLogo from "../images/logo_icon.svg";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 import { api } from "../utils/Api";
 import { useState, useEffect, useRef } from "react";
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate, useNavigate } from "react-router";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
 import * as auth from "../utils/auth";
 import InfoTooltip from "./Main/components/Popup/components/InfoTooltip/InfoTooltip";
-import { setToken } from "../utils/token";
+import { getToken, removeToken, setToken } from "../utils/token";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
   const [popup, setPopup] = useState("");
   const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // carrega a tela de loading da autenticação e carregamento dos dados
+  const [isProcessing, setIsProcessing] = useState(false); // muda o botão de login e registro, durante o processamento do request
+
+  const navigate = useNavigate();
   const formRef = useRef();
 
+  // Autentica o usuário para acessar a rota protegida e carrega os dados
+  async function initializeSession(jwt) {
+    try {
+      const [authData, userData] = await Promise.all([
+        auth.getCurrentUser(jwt),
+        api.getUserInfo(),
+      ]);
+      const { data: userAuth } = authData;
+      const cards = await api.getInitialCards();
+
+      setIsLoggedIn(true);
+      setCurrentUser({ ...userData, ...userAuth });
+      setCards(cards);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
-    (async () => {
-      try {
-        const userInfo = await api.getUserInfo();
-        setCurrentUser(userInfo);
-        const initialCards = await api.getInitialCards();
-        setCards(initialCards);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
+    const jwt = getToken();
+
+    if (!jwt) {
+      setIsLoading(false);
+      return;
+    }
+
+    initializeSession(jwt);
   }, []);
 
   function handleOpenPopup(popup) {
@@ -97,34 +121,58 @@ export default function App() {
   }
 
   async function handleSignUp(data) {
+    let errorMessage = "";
     try {
-      const userData = await auth.register(data);
-      setPopup({ children: <InfoTooltip /> });
+      setIsProcessing(true);
+      await auth.register(data);
+      navigate("/signin");
     } catch (error) {
-      let errorMessage = `Desculpe, algo deu errado! Tente novamente mais tarde.`;
+      errorMessage = `Desculpe, algo deu errado! Tente novamente mais tarde.`;
       if (error.status === 400) {
         errorMessage = "O endereço de e-mail já está cadastrado.";
       }
-      setPopup({ children: <InfoTooltip error={{ message: errorMessage }} /> });
+    } finally {
+      setIsProcessing(false);
+      setPopup({ children: <InfoTooltip error={errorMessage} /> });
     }
   }
 
   async function handleSignIn(user) {
+    let errorMessage = "";
     try {
+      setIsProcessing(true);
       const { token } = await auth.authorize(user);
       setToken(token);
-      setIsLoggedIn(true);
+      setIsLoading(true);
+      initializeSession(token);
+      navigate("/");
     } catch (error) {
-      let errorMessage = `Desculpe, algo deu errado! Tente novamente mais tarde.`;
+      errorMessage = `Desculpe, algo deu errado! Tente novamente mais tarde.`;
       if (error.status === 401) {
         errorMessage = "E-mail ou senha inválida! Verifique e tente novamente.";
+        setPopup({ children: <InfoTooltip error={errorMessage} /> });
       }
-      setPopup({ children: <InfoTooltip error={{ message: errorMessage }} /> });
+    } finally {
+      setIsProcessing(false);
     }
   }
 
   function handleSignOut() {
+    removeToken();
     setIsLoggedIn(false);
+    setCurrentUser("");
+    setCards([]);
+    navigate("/signin");
+  }
+
+  if (isLoading) {
+    return (
+      <div className="loading">
+        <img src={iconLogo} className="loading__logo-icon" alt="" />
+        <img src={aroundLogo} className="loading__logo-around" alt="" />
+        <p className="loading__text">Carregando...</p>
+      </div>
+    );
   }
 
   return (
@@ -165,6 +213,7 @@ export default function App() {
                   onSignIn={handleSignIn}
                   popup={popup}
                   formRef={formRef}
+                  isProcessing={isProcessing}
                 />
               </ProtectedRoute>
             }
@@ -177,6 +226,7 @@ export default function App() {
                   onClosePopup={handleClosePopup}
                   onSignUp={handleSignUp}
                   popup={popup}
+                  isProcessing={isProcessing}
                 />
               </ProtectedRoute>
             }

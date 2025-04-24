@@ -6,8 +6,8 @@ export default function EditProfile(props) {
     formValidator,
     errorMsg,
     buttonDisabled,
-    buttonStatus,
-    onButtonSavingState,
+    isSubmitting,
+    onButtonLoading,
   } = props;
   const { currentUserInfo: currentUser, onUpdateUser } =
     useContext(CurrentUserContext);
@@ -30,9 +30,9 @@ export default function EditProfile(props) {
   function handleSubmit(evt) {
     evt.preventDefault();
     // Chama a função que altera o estado para alterar o botão de submit, desativando e indicando processo de solicitação da API
-    onButtonSavingState();
+    onButtonLoading();
     onUpdateUser({ name, about: description });
-    onButtonSavingState(); // habilita e volta o texto padrão do botão
+    onButtonLoading(); // habilita e volta o texto padrão do botão
   }
 
   return (
@@ -96,7 +96,7 @@ export default function EditProfile(props) {
           className={
             // Alterna a classe para manter o estilo do botão de submit durante o processo de salvamento com base nos estados do botão.
             `button button_popup-submit${
-              buttonDisabled && buttonStatus
+              buttonDisabled && isSubmitting
                 ? " button_popup-submit_disabled"
                 : ""
             }`
@@ -104,7 +104,7 @@ export default function EditProfile(props) {
           disabled={buttonDisabled} // Desativa/Habilida o botão de submit com base no estado do botão.
         >
           {
-            !buttonStatus ? "Salvar" : "Salvando..." // Alterna o o texto do botão com base no estado do botão durante o processo de salvamento.
+            !isSubmitting ? "Salvar" : "Salvando..." // Alterna o o texto do botão com base no estado do botão durante o processo de salvamento.
           }
         </button>
       </fieldset>

@@ -4,14 +4,9 @@ import Popup from "../Main/components/Popup/Popup";
 import InfoTooltip from "../Main/components/Popup/components/InfoTooltip/InfoTooltip";
 
 export default function Login(props) {
-  const { formRef, onClosePopup, onSignIn, popup } = props;
+  const { formRef, onClosePopup, onSignIn, popup, isProcessing } = props;
 
   const [data, setData] = useState({ password: "", email: "" });
-
-  function handleSubmitClick(e) {
-    e.preventDefault();
-    onSignIn(data);
-  }
 
   function handleOnChange(e) {
     const { name, value } = e.target;
@@ -19,6 +14,11 @@ export default function Login(props) {
       ...prevData,
       [name]: value,
     }));
+  }
+
+  function handleSubmitClick(e) {
+    e.preventDefault();
+    onSignIn(data);
   }
 
   return (
@@ -58,8 +58,12 @@ export default function Login(props) {
                 required
               />
             </label>
-            <button type="submit" className="button button_auth-submit">
-              Entrar
+            <button
+              type="submit"
+              className="button button_auth-submit"
+              disabled={isProcessing}
+            >
+              {!isProcessing ? "Entrar" : "Entrando..."}
             </button>
           </fieldset>
         </form>

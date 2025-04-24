@@ -5,8 +5,8 @@ export default function NewCard(props) {
     formValidator,
     errorMsg,
     buttonDisabled,
-    buttonStatus,
-    onButtonSavingState,
+    isSubmitting,
+    onButtonLoading,
     onAddPlaceSubmit,
   } = props;
   const [title, setTitle] = useState("");
@@ -31,9 +31,9 @@ export default function NewCard(props) {
   function handleSubmit(evt) {
     evt.preventDefault();
     // Chama a função que altera o estado para alterar o botão de submit, desativando e indicando processo de solicitação da API
-    onButtonSavingState();
+    onButtonLoading();
     onAddPlaceSubmit({ name: title, link: url }); // Envia os da para atualizar API e o estado dos cards
-    onButtonSavingState(); // habilita e volta o texto padrão do botão
+    onButtonLoading(); // habilita e volta o texto padrão do botão
   }
 
   return (
@@ -90,7 +90,7 @@ export default function NewCard(props) {
           className={
             // Alterna a classe para manter o estilo do botão de submit durante o processo de salvamento com base nos estados do botão.
             `button button_popup-submit${
-              buttonDisabled && buttonStatus
+              buttonDisabled && isSubmitting
                 ? " button_popup-submit_disabled"
                 : ""
             }`
@@ -98,7 +98,7 @@ export default function NewCard(props) {
           disabled={buttonDisabled} // Desativa/Habilida o botão de submit com base no estado do botão.
         >
           {
-            !buttonStatus ? "Criar" : "Salvando..." // Alterna o o texto do botão com base no estado do botão durante o processo de salvamento.
+            !isSubmitting ? "Criar" : "Salvando..." // Alterna o o texto do botão com base no estado do botão durante o processo de salvamento.
           }
         </button>
       </fieldset>

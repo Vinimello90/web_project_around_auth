@@ -25,12 +25,14 @@ export default function Card(props) {
         className="card__image"
         onClick={() => onOpenPopup(imagePopup)}
       />
-      <button
-        type="button"
-        aria-label="Delete card"
-        className="button button_remove"
-        onClick={() => onOpenPopup(removeCard)}
-      ></button>
+      {
+        <button
+          type="button"
+          aria-label="Delete card"
+          className="button button_remove"
+          onClick={() => onOpenPopup(removeCard)}
+        ></button>
+      }
       <div className="card__title-container">
         <h2 className="card__title">{name}</h2>
         <button

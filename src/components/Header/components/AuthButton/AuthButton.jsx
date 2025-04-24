@@ -1,11 +1,12 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { CurrentUserContext } from "../../../../contexts/CurrentUserContext";
 
 export default function AuthButton({ formRef }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn, onSignOut } = useContext(CurrentUserContext);
+  const { isLoggedIn, onSignOut, currentUserInfo } =
+    useContext(CurrentUserContext);
 
   function handleSignOutClick() {
     onSignOut();
@@ -18,7 +19,7 @@ export default function AuthButton({ formRef }) {
   if (isLoggedIn) {
     return (
       <div className="header__user">
-        <p className="header__e-mail">email@email.com</p>
+        <p className="header__e-mail">{currentUserInfo.email}</p>
         <button
           onClick={handleSignOutClick}
           type="button"

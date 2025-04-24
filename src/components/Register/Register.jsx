@@ -3,14 +3,9 @@ import { Link } from "react-router";
 import Popup from "../Main/components/Popup/Popup";
 
 export default function Register(props) {
-  const { onClosePopup, onSignUp, popup } = props;
+  const { onClosePopup, onSignUp, popup, isProcessing } = props;
 
   const [data, setData] = useState({ password: "", email: "" });
-
-  function handleSubmitClick(e) {
-    e.preventDefault();
-    onSignUp(data);
-  }
 
   function handleOnChange(e) {
     const { name, value } = e.target;
@@ -18,6 +13,11 @@ export default function Register(props) {
       ...prevData,
       [name]: value,
     }));
+  }
+
+  function handleSubmitClick(e) {
+    e.preventDefault();
+    onSignUp(data);
   }
 
   return (
@@ -54,8 +54,12 @@ export default function Register(props) {
                 required
               />
             </label>
-            <button type="submit" className="button button_auth-submit">
-              Inscrever-se
+            <button
+              type="submit"
+              className="button button_auth-submit"
+              disabled={isProcessing}
+            >
+              {!isProcessing ? "Inscrever-se" : "Criando conta..."}
             </button>
           </fieldset>
         </form>

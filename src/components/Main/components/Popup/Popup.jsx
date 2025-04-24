@@ -8,8 +8,8 @@ export default function Popup(props) {
   const [errorMsg, setErrorMsg] = useState({
     link: "",
   });
-  const [buttonDisabled, setbuttonDisabled] = useState(true); // ativa/desativa o botão do children.
-  const [buttonStatus, setButtonStatus] = useState(false); // altera o texto do botão do children.
+  const [buttonDisabled, setbuttonDisabled] = useState(false); // ativa/desativa o botão do children.
+  const [isSubmitting, setIsSubmitting] = useState(false); // altera o texto do botão do children.
 
   useEffect(() => {
     // Instancia a classe FormValidator somente uma vez no useEfect() ao montar o componente.
@@ -59,8 +59,8 @@ export default function Popup(props) {
     formValidator,
     errorMsg,
     buttonDisabled,
-    buttonStatus,
-    onButtonSavingState: handleButtonSavingState,
+    isSubmitting,
+    onButtonLoading: setButtonLoading,
   });
 
   // Manipula o clique no elemento de background da popup para fechar ao clicar fora da popup.
@@ -71,8 +71,8 @@ export default function Popup(props) {
   }
 
   // Manipula o estado para alterar o botão do children.
-  function handleButtonSavingState() {
-    setButtonStatus(!buttonStatus);
+  function setButtonLoading() {
+    setIsSubmitting(!isSubmitting);
     setbuttonDisabled(!buttonDisabled);
   }
 

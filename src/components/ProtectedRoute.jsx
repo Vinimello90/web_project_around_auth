@@ -4,6 +4,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function ProtectedRoute({ children, anonymous = false }) {
   const { isLoggedIn } = useContext(CurrentUserContext);
+
   if (!isLoggedIn && !anonymous) {
     return <Navigate to="/signin" replace />;
   }
