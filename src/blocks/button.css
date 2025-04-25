@@ -7,6 +7,7 @@
   transition: opacity linear 0.3s;
   cursor: pointer;
   line-height: 1.21;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button_auth {
