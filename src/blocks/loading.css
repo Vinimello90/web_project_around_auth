@@ -21,3 +21,21 @@
   color: #fff;
   line-height: 1.21;
 }
+
+@media screen and (max-width: 600px) {
+  .loading {
+    padding: 0 10px;
+  }
+
+  .loading__logo-icon {
+    max-width: 60px;
+  }
+
+  .loading__logo-around {
+    max-width: 200px;
+  }
+
+  .loading__text {
+    font-size: 14px;
+  }
+}
