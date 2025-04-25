@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import Popup from "../Main/components/Popup/Popup";
-import InfoTooltip from "../Main/components/Popup/components/InfoTooltip/InfoTooltip";
 
 export default function Login(props) {
   const { formRef, onClosePopup, onSignIn, popup, isProcessing } = props;

@@ -19,7 +19,7 @@ export default function AuthButton({ formRef, isMenuOpen, isMobile = false }) {
     if (!isMenuOpen && isMobile) {
       setDisplayMenu(false);
     }
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isMobile]);
 
   function handleSignOutClick() {
     onSignOut();
