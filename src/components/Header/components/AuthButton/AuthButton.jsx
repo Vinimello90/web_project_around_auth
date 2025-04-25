@@ -1,12 +1,25 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { CurrentUserContext } from "../../../../contexts/CurrentUserContext";
 
-export default function AuthButton({ formRef }) {
+export default function AuthButton({ formRef, isMenuOpen, isMobile = false }) {
   const location = useLocation();
   const navigate = useNavigate();
+
   const { isLoggedIn, onSignOut, currentUserInfo } =
     useContext(CurrentUserContext);
+
+  const [displayMenu, setDisplayMenu] = useState(false);
+
+  useEffect(() => {
+    if (isMenuOpen && isMobile) {
+      setDisplayMenu(true);
+      return;
+    }
+    if (!isMenuOpen && isMobile) {
+      setDisplayMenu(false);
+    }
+  }, [isMenuOpen]);
 
   function handleSignOutClick() {
     onSignOut();
@@ -18,12 +31,16 @@ export default function AuthButton({ formRef }) {
 
   if (isLoggedIn) {
     return (
-      <div className="header__user">
+      <div
+        className={`header__user${isMobile ? " header__user-mobile" : ""} ${
+          displayMenu ? " header__user-mobile_show" : ""
+        } `}
+      >
         <p className="header__e-mail">{currentUserInfo.email}</p>
         <button
           onClick={handleSignOutClick}
           type="button"
-          className="button button_auth"
+          className="button button_auth button_auth_logged-in"
         >
           Sair
         </button>

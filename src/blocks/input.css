@@ -16,7 +16,7 @@
 .input_auth {
   color: #fff;
   border-bottom: 1px solid #ccc;
-  width: 358px;
+  width: 100%;
 }
 
 .input_auth::placeholder {
@@ -39,11 +39,15 @@
 
 @media screen and (max-width: 590px) {
   .input {
-    padding: 9px;
     height: 26px;
   }
 
   .input__popup-error {
     font-size: 10px;
+  }
+
+  .input_auth {
+    color: #fff;
+    border-bottom: 1px solid #ccc;
   }
 }
