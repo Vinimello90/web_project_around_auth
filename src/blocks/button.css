@@ -107,7 +107,7 @@
   background-size: 21px 19px;
   height: 19px;
   width: 21px;
-  transition: background linear 0.3s;
+  transition: background ease-in-out 0.2s;
 }
 
 .button_like_activate {
