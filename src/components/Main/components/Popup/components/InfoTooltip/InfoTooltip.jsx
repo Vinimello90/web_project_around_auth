@@ -27,7 +27,7 @@ export default function InfoTooltip({ error, signIn = false, signUpSuccess }) {
 
   return (
     <div className="info-tooltip">
-      <img src={imageSrc} alt={imageAlt} className="info-tooltip__image" />
+      <img src={imageSrc} alt="" className="info-tooltip__image" />
       <h2 className="info-tooltip__message">
         {successMessage || errorMessage}
       </h2>
