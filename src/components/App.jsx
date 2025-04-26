@@ -68,7 +68,11 @@ export default function App() {
   async function handleUpdateUser(userInfo) {
     try {
       const newUserInfo = await api.updateUserInfo(userInfo);
-      setCurrentUser(newUserInfo);
+      setCurrentUser((prevState) => ({
+        ...prevState,
+        name: newUserInfo.name,
+        about: newUserInfo.about,
+      }));
       handleClosePopup();
     } catch (error) {
       console.error(error);
@@ -78,7 +82,10 @@ export default function App() {
   async function handleUpdateAvatar(newAvatarUrl) {
     try {
       const newUserInfo = await api.updateUserAvatar(newAvatarUrl);
-      setCurrentUser(newUserInfo);
+      setCurrentUser((prevState) => ({
+        ...prevState,
+        avatar: newUserInfo.avatar,
+      }));
       handleClosePopup();
     } catch (error) {
       console.error(error);
