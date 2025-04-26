@@ -37,10 +37,6 @@
   transition: color linear 0.3s;
 }
 
-.register__signin-link:hover {
-  color: rgba(255, 255, 255, 0.6);
-}
-
 @media screen and (max-width: 590px) {
   .register {
     padding: 0 27px 0;
@@ -56,5 +52,21 @@
 
   .register__signin-text {
     font-size: 12px;
+  }
+
+  .register__signin-link {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@media (hover: hover) {
+  .register__signin-link:hover {
+    color: #ffffff99;
+  }
+}
+
+@media (pointer: coarse) {
+  .register__signin-link:hover {
+    color: #fff;
   }
 }

@@ -57,4 +57,20 @@
   .login__signup-text {
     font-size: 12px;
   }
+
+  .login__signup-link {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@media (hover: hover) {
+  .login__signup-link:hover {
+    color: #ffffff99;
+  }
+}
+
+@media (pointer: coarse) {
+  .login__signup-link:hover {
+    color: #fff;
+  }
 }
