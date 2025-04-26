@@ -14,6 +14,7 @@ import Register from "./Register/Register";
 import * as auth from "../utils/auth";
 import InfoTooltip from "./Main/components/Popup/components/InfoTooltip/InfoTooltip";
 import { getToken, removeToken, setToken } from "../utils/token";
+import CheckBowserVersion from "./CheckBrowserVersion/CheckBrowserVersion";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,36 +36,36 @@ export default function App() {
       ]);
       const { data: userAuth } = authData;
       const cards = await api.getInitialCards();
-
       setIsLoggedIn(true);
       setCurrentUser({ ...userData, ...userAuth });
       setCards(cards);
-      setIsLoading(false);
     } catch (err) {
+      const errorPopup = { children: <InfoTooltip error={err} /> };
+      setPopup(errorPopup); // monta a popup para exibir o erro
+      removeToken();
+    } finally {
       setIsLoading(false);
-      console.log(err);
     }
   }
 
   useEffect(() => {
     const jwt = getToken();
-
-    if (!jwt) {
+    const browserWarning = CheckBowserVersion(); // verifica a versão do navegador e retorna um componente caso verdadeiro
+    if (jwt) {
+      initializeSession(jwt);
+    } else {
       setIsLoading(false);
-      return;
     }
-
-    initializeSession(jwt);
+    setPopup(browserWarning); // muda o estado para montar a popup se retornar o componente
   }, []);
-
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
-
   function handleClosePopup() {
     setPopup("");
   }
 
+  //envia os dados para requistar atualização dos dados do usuário atual
   async function handleUpdateUser(userInfo) {
     try {
       const newUserInfo = await api.updateUserInfo(userInfo);
@@ -79,6 +80,7 @@ export default function App() {
     }
   }
 
+  // envia os dados e requisita a atualização do avatar do usuário atual
   async function handleUpdateAvatar(newAvatarUrl) {
     try {
       const newUserInfo = await api.updateUserAvatar(newAvatarUrl);
@@ -92,6 +94,7 @@ export default function App() {
     }
   }
 
+  // envia os dados do card para requisita a adição novo card
   async function handleAddPlaceSubmit(cardInfo) {
     try {
       const newCard = await api.addNewCard(cardInfo);
@@ -101,7 +104,7 @@ export default function App() {
       console.error(error);
     }
   }
-
+  // Requisita a remoção do card do id selecionado
   async function handleCardDelete(id) {
     try {
       await api.deleteCard(id);
@@ -114,6 +117,7 @@ export default function App() {
     }
   }
 
+  // Requisita o like do id do card selecionado
   async function handleCardLike(card) {
     try {
       const newCard = await api.editLikeStatus(card.isLiked, card._id);
@@ -127,25 +131,30 @@ export default function App() {
     }
   }
 
+  // Envia os dados do registro
   async function handleSignUp(data) {
-    let errorMessage = "";
     try {
+      const successPopup = {
+        children: <InfoTooltip signUpSuccess />,
+        type: "signUp",
+      };
       setIsProcessing(true);
       await auth.register(data);
-      navigate("/signin");
+      setPopup(successPopup);
+      setTimeout(() => {
+        setPopup("");
+        navigate("/signin");
+      }, 1500);
     } catch (error) {
-      errorMessage = `Desculpe, algo deu errado! Tente novamente mais tarde.`;
-      if (error.status === 400) {
-        errorMessage = "O endereço de e-mail já está cadastrado.";
-      }
+      const errorPopup = { children: <InfoTooltip error={error} /> };
+      setPopup(errorPopup);
     } finally {
       setIsProcessing(false);
-      setPopup({ children: <InfoTooltip error={errorMessage} /> });
     }
   }
 
+  // Envia os dados de login para requisitar a autorização
   async function handleSignIn(user) {
-    let errorMessage = "";
     try {
       setIsProcessing(true);
       const { token } = await auth.authorize(user);
@@ -154,16 +163,14 @@ export default function App() {
       initializeSession(token);
       navigate("/");
     } catch (error) {
-      errorMessage = `Desculpe, algo deu errado! Tente novamente mais tarde.`;
-      if (error.status === 401) {
-        errorMessage = "E-mail ou senha inválida! Verifique e tente novamente.";
-        setPopup({ children: <InfoTooltip error={errorMessage} /> });
-      }
+      const errorPopup = { children: <InfoTooltip error={error} signIn /> };
+      setPopup(errorPopup);
     } finally {
       setIsProcessing(false);
     }
   }
 
+  // Inicia o logout removendo o token e limpando os estados
   function handleSignOut() {
     removeToken();
     setIsLoggedIn(false);
@@ -172,6 +179,7 @@ export default function App() {
     navigate("/signin");
   }
 
+  // Tela de loading enquanto é feita autorização
   if (isLoading) {
     return (
       <div className="loading">

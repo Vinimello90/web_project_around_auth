@@ -2,7 +2,7 @@ import { cloneElement, useEffect, useState } from "react";
 import FormValidator from "../../../../utils/FormValidator";
 
 export default function Popup(props) {
-  const { title, onClose, infoTooltip = false } = props;
+  const { title, onClose, popupType } = props;
   const [displayPopup, setDisplayPopup] = useState("");
   const [formValidator, setFormValidator] = useState("");
   const [errorMsg, setErrorMsg] = useState({
@@ -83,7 +83,7 @@ export default function Popup(props) {
     >
       <div
         className={`popup__container ${
-          !title && !infoTooltip ? "popup__container_image" : ""
+          popupType === "image" ? "popup__container_image" : ""
         }`} // Alterna a classe ao mudar o estado para exibir a popup com fade in.
       >
         <button

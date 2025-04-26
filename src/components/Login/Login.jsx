@@ -73,11 +73,7 @@ export default function Login(props) {
           </Link>
         </p>
       </section>
-      {popup && (
-        <Popup onClose={onClosePopup} infoTooltip>
-          {popup.children}
-        </Popup>
-      )}
+      {popup && <Popup onClose={onClosePopup}>{popup.children}</Popup>}
     </main>
   );
 }

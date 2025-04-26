@@ -5,6 +5,7 @@ export default function Card(props) {
   const { name, link, isLiked, _id: id } = props.card;
   const { onOpenPopup, onCardLike, onCardDelete } = props;
   const imagePopup = {
+    type: "image",
     children: <ImagePopup name={name} link={link} />,
   };
 

@@ -78,11 +78,17 @@ export default function Main(props) {
               onCardDelete={onCardDelete}
             />
           ))}
+
           {cards.length === 0 && <NoCards />}
         </ul>
       </section>
+
       {popup && (
-        <Popup onClose={onClosePopup} title={popup.title}>
+        <Popup
+          onClose={onClosePopup}
+          title={popup.title}
+          popupType={popup.type}
+        >
           {popup.children}
         </Popup>
       )}
