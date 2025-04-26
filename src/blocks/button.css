@@ -7,7 +7,6 @@
   transition: opacity linear 0.3s;
   cursor: pointer;
   line-height: 1.21;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .button_auth {
@@ -108,10 +107,7 @@
   background-size: 21px 19px;
   height: 19px;
   width: 21px;
-}
-
-.button_like:active {
-  background: url("../images/like_icon_active.svg") center no-repeat;
+  transition: background linear 0.3s;
 }
 
 .button_like_activate {
@@ -119,6 +115,10 @@
 }
 
 @media screen and (max-width: 590px) {
+  .button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .button_burger-menu {
     display: flex;
     flex-direction: column;
@@ -222,5 +222,20 @@
 
   .button_popup-submit:disabled:hover {
     opacity: 100%;
+  }
+}
+
+@media (pointer: coarse) {
+  .button:hover {
+    opacity: 100%;
+  }
+
+  .button_avatar:hover {
+    background-image: url("../images/edit_avatar.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26px;
+    cursor: pointer;
+    opacity: 60%;
   }
 }
