@@ -197,7 +197,6 @@ export default function App() {
         isLoggedIn,
         onUpdateUser: handleUpdateUser,
         onUpdateAvatar: handleUpdateAvatar,
-        onSignOut: handleSignOut,
       }}
     >
       <div className="page">
