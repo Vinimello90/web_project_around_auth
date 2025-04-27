@@ -92,8 +92,7 @@ Funções adicionais foram implementadas para melhorar a experiência do usuári
 
 - Formulários de **login** e **registro** para permitir que os usuários acessem a plataforma.
 
-<img src="./src/images/signin_screenshot.png" alt="Captura de tela do botão de salvar" width="49.4%" /> 
-<img src="./src/images/signup_screenshot.png" alt="Captura de tela do botão de salvar" width="49.4%" />
+<img src="./src/images/signin_screenshot.png" alt="Captura de tela do botão de salvar" width="49.4%" /> <img src="./src/images/signup_screenshot.png" alt="Captura de tela do botão de salvar" width="49.4%" />
 
 - Após um **registro** bem-sucedido, uma **popup** de confirmação é exibida, e o usuário é redirecionado automaticamente para a tela de login. Caso haja algum erro durante o **registro** ou **autenticação**, uma **popup** de erro é exibida, informando o que deu errado.
 
