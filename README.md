@@ -96,13 +96,11 @@ Funções adicionais foram implementadas para melhorar a experiência do usuári
 
 - Após um **registro** bem-sucedido, uma **popup** de confirmação é exibida, e o usuário é redirecionado automaticamente para a tela de login. Caso haja algum erro durante o **registro** ou **autenticação**, uma **popup** de erro é exibida, informando o que deu errado.
 
-<img src="./src/images/signup_confirmation_screenshot.png" alt="Captura de tela da confirmação do registro" width="49.4%" />
-<img src="./src/images/signin_error_screenshot.png" alt="Captura de tela do do erro de validação de usuário e senha" width="49.4%" />
+<img src="./src/images/signup_confirmation_screenshot.png" alt="Captura de tela da confirmação do registro" width="49.4%" /> <img src="./src/images/signin_error_screenshot.png" alt="Captura de tela do do erro de validação de usuário e senha" width="49.4%" />
 
 - Foi adicionado um menu **hambúrguer** no cabeçalho da aplicação. Ao ser clicado, ele abre um menu lateral que exibe o e-mail do usuário logado, permitindo sua identificação. Além disso, o menu contém um botão de "Sair" que realiza o logout do usuário da aplicação.
 
-<img src="./src/images/burger_menu_closed_screenshot.png" alt="Captura de tela do botão de hambúrguer fechado" width="49.4%" />
-<img src="./src/images/burger_menu_opened_screenshot.png" alt="Captura de tela do botão de hambúrguer aberto" width="49.4%" />
+<img src="./src/images/burger_menu_closed_screenshot.png" alt="Captura de tela do botão de hambúrguer fechado" width="49.4%" /> <img src="./src/images/burger_menu_opened_screenshot.png" alt="Captura de tela do botão de hambúrguer aberto" width="49.4%" />
 
 - Alterar o texto do botão de **salvar** indicando o processo de salvamento e restaurá-lo ao seu estado original após a conclusão.
 
