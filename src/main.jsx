@@ -7,8 +7,8 @@ import App from "./components/App.jsx";
 // HashRouter usado para corrigir erro de rotas do github-pages
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
+    </BrowserRouter>
   </StrictMode>
 );
