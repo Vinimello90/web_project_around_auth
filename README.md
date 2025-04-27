@@ -4,7 +4,7 @@ O projeto **Around the U.S. - EUA Afora** foi desenvolvido para permitir que o u
 
 <img src="./src/images/screenshot_fullpage.png" alt="Captura de tela do projeto EUA Afora" />
 
-**Veja o projeto em funcionamento clicando [aqui](https://vinimello90.github.io/web_project_around_react).**
+**Veja o projeto em funcionamento clicando [aqui](https://vinimello90.github.io/web_project_around_auth).**
 
 ## Tecnologias e Metodologias
 
@@ -78,11 +78,32 @@ No **React**, o código foi reestruturado usando o formato **JSX** e separado em
 
   <img src="./src/images/popup_validation.png" alt="Captura de tela da validação de formulário" />
 
+- Foi criado um componente **JSX** responsável por verificar a versão do navegador do usuário. Para isso, foi utilizada a propriedade `userAgent` do objeto `navigator` do JavaScript, que contém as informações sobre o navegador em uso. Utilizando **expressões regulares (REGEX)**, o componente identifica o navegador e sua versão. Caso o usuário esteja utilizando uma versão desatualizada, o componente retorna uma **popup** recomendando a atualização do navegador.
+
+  <img src="./src/images/browser_version_popup_screenshot.png" alt="Captura de tela da popup de aviso da versão do navegador" />
+
+  - No componente raiz, foi utilizado o `<BrowserRouter>` do **react-router** para configurar as rotas da aplicação. Dentro do componente principal, o `<Routes>` foi usado para definir as diferentes rotas da aplicação, utilizando o componente `<Route path="" element=""/>` para especificar as páginas, como a principal, o registro e o login. Para garantir que algumas rotas sejam acessadas apenas por usuários autenticados, foi implementado o componente `<ProtectedRoute>`. Ele atua como uma proteção, permitindo o acesso à rota principal apenas se o usuário estiver autenticado. Caso contrário, o acesso às rotas de registro e login é liberado para usuários não autenticados.
+
 ### API
 
-Foi criada uma classe para interagir com a **API**, permitindo realizar solicitações **GET**, **POST**, **PATCH**, **PUT** e **DELETE** para obter, adicionar ou modificar dados no servidor. A autenticação é feita por meio de um **token**.
+Foi criada uma classe para interagir com a **API**, permitindo realizar solicitações **GET**, **POST**, **PATCH**, **PUT** e **DELETE** para obter, adicionar ou modificar dados no servidor. O registro e autenticação do usuário é feita por meio de um módulo que faz as requisições, a autenticação é feita com um **token JWT**.
 
 Funções adicionais foram implementadas para melhorar a experiência do usuário, como:
+
+- Formulários de **login** e **registro** para permitir que os usuários acessem a plataforma.
+
+<img src="./src/images/signin_screenshot.png" alt="Captura de tela do botão de salvar" width="49.4%" /> 
+<img src="./src/images/signup_screenshot.png" alt="Captura de tela do botão de salvar" width="49.4%" />
+
+- Após um **registro** bem-sucedido, uma **popup** de confirmação é exibida, e o usuário é redirecionado automaticamente para a tela de login. Caso haja algum erro durante o **registro** ou **autenticação**, uma **popup** de erro é exibida, informando o que deu errado.
+
+<img src="./src/images/signup_confirmation_screenshot.png" alt="Captura de tela da confirmação do registro" width="49.4%" />
+<img src="./src/images/signin_error_screenshot.png" alt="Captura de tela do do erro de validação de usuário e senha" width="49.4%" />
+
+- Foi adicionado um menu **hambúrguer** no cabeçalho da aplicação. Ao ser clicado, ele abre um menu lateral que exibe o e-mail do usuário logado, permitindo sua identificação. Além disso, o menu contém um botão de "Sair" que realiza o logout do usuário da aplicação.
+
+<img src="./src/images/burger_menu_closed_screenshot.png" alt="Captura de tela do botão de hambúrguer fechado" width="49.4%" />
+<img src="./src/images/burger_menu_opened_screenshot.png" alt="Captura de tela do botão de hambúrguer aberto" width="49.4%" />
 
 - Alterar o texto do botão de **salvar** indicando o processo de salvamento e restaurá-lo ao seu estado original após a conclusão.
 
