@@ -197,10 +197,11 @@ export default function App() {
         isLoggedIn,
         onUpdateUser: handleUpdateUser,
         onUpdateAvatar: handleUpdateAvatar,
+        onSignOut: handleSignOut,
       }}
     >
       <div className="page">
-        <Header formRef={formRef} onSignOut={handleSignOut} />
+        <Header formRef={formRef} />
         <Routes>
           <Route
             path="/"
