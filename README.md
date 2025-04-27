@@ -4,7 +4,7 @@ O projeto **Around the U.S. - EUA Afora** foi desenvolvido para permitir que o u
 
 <img src="./src/images/screenshot_fullpage.png" alt="Captura de tela do projeto EUA Afora" />
 
-**Veja o projeto em funcionamento clicando [aqui](https://vinimello90.github.io/web_project_around_auth).**
+**Veja o projeto em funcionamento clicando [aqui](https://euaafora.netlify.app/).**
 
 ## Tecnologias e Metodologias
 
