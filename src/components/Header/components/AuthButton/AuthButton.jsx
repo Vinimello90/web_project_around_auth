@@ -50,16 +50,16 @@ export default function AuthButton({ formRef, isMenuOpen, isMobile = false }) {
 
   return (
     <>
-      {location.pathname === "/signin" ? (
-        <button onClick={handleFormFocusClick} className="button button_auth">
-          Entrar
-        </button>
-      ) : (
+      {location.pathname === "/signup" ? (
         <button
           onClick={() => navigate("/signin")}
           className="button button_auth"
         >
           Faça o Login
+        </button>
+      ) : (
+        <button onClick={handleFormFocusClick} className="button button_auth">
+          Entrar
         </button>
       )}
     </>

@@ -1,6 +1,6 @@
 import InfoTooltip from "../Main/components/Popup/components/InfoTooltip/InfoTooltip";
 
-export default function CheckBowserVersion() {
+export default function CheckBrowserVersion() {
   const userAgent = navigator.userAgent;
   const browser = userAgent.match(/(chrome|firefox|version|edg)/gi)[0];
   const version = parseFloat(

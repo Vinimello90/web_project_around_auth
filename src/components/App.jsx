@@ -1,20 +1,19 @@
-import "../index.css";
 import aroundLogo from "../images/logo_around.svg";
 import iconLogo from "../images/logo_icon.svg";
 import Header from "./Header/Header";
+import * as auth from "../utils/auth";
+import ProtectedRoute from "./ProtectedRoute";
 import Main from "./Main/Main";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
 import Footer from "./Footer/Footer";
 import { api } from "../utils/Api";
 import { useState, useEffect, useRef } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import ProtectedRoute from "./ProtectedRoute";
-import Login from "./Login/Login";
-import Register from "./Register/Register";
-import * as auth from "../utils/auth";
+import { Routes, Route, Navigate, useNavigate } from "react-router";
 import InfoTooltip from "./Main/components/Popup/components/InfoTooltip/InfoTooltip";
 import { getToken, removeToken, setToken } from "../utils/token";
-import CheckBowserVersion from "./CheckBrowserVersion/CheckBrowserVersion";
+import CheckBrowserVersion from "./CheckBrowserVersion/CheckBrowserVersion";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,20 +26,38 @@ export default function App() {
   const navigate = useNavigate();
   const formRef = useRef();
 
+  // Verifica o token do usuário atual
+  async function userAuth(jwt) {
+    return await auth.getCurrentUser(jwt);
+  }
+
+  async function userAuthBFCacheHandler() {
+    try {
+      const jwt = getToken();
+      if (jwt) {
+        await userAuth(jwt);
+      } else {
+        throw new Error("token não encontrado");
+      }
+    } catch {
+      handleSignOut();
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   // Autentica o usuário para acessar a rota protegida e carrega os dados
   async function initializeSession(jwt) {
     try {
-      const [authData, userData] = await Promise.all([
-        auth.getCurrentUser(jwt),
-        api.getUserInfo(),
-      ]);
-      const { data: userAuth } = authData;
+      const authData = await userAuth(jwt);
+      const userData = await api.getUserInfo();
       const cards = await api.getInitialCards();
+      const { data: currentUser } = authData;
       setIsLoggedIn(true);
-      setCurrentUser({ ...userData, ...userAuth });
+      setCurrentUser({ ...userData, ...currentUser });
       setCards(cards);
-    } catch (err) {
-      const errorPopup = { children: <InfoTooltip error={err} /> };
+    } catch (error) {
+      const errorPopup = { children: <InfoTooltip error={error} /> };
       setPopup(errorPopup); // monta a popup para exibir o erro
       removeToken();
     } finally {
@@ -49,15 +66,22 @@ export default function App() {
   }
 
   useEffect(() => {
+    window.addEventListener("pageshow", (e) => {
+      if (e.persisted) {
+        setIsLoading(true);
+        userAuthBFCacheHandler();
+      }
+    });
     const jwt = getToken();
-    const browserWarning = CheckBowserVersion(); // verifica a versão do navegador e retorna um componente caso verdadeiro
+    const browserWarning = CheckBrowserVersion(); // verifica a versão do navegador e retorna um componente caso verdadeiro
     if (jwt) {
       initializeSession(jwt);
     } else {
       setIsLoading(false);
     }
-    setPopup(browserWarning); // muda o estado para montar a popup se retornar o componente
+    setPopup(browserWarning);
   }, []);
+
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
