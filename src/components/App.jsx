@@ -167,7 +167,7 @@ export default function App() {
       setPopup(successPopup);
       setTimeout(() => {
         setPopup("");
-        navigate("/signin");
+        navigate("/signin", { replace: true });
       }, 1500);
     } catch (error) {
       const errorPopup = { children: <InfoTooltip error={error} /> };
@@ -185,7 +185,7 @@ export default function App() {
       setToken(token);
       setIsLoading(true);
       initializeSession(token);
-      navigate("/");
+      navigate("/", { replace: true });
     } catch (error) {
       const errorPopup = { children: <InfoTooltip error={error} signIn /> };
       setPopup(errorPopup);
@@ -200,7 +200,7 @@ export default function App() {
     setIsLoggedIn(false);
     setCurrentUser("");
     setCards([]);
-    navigate("/signin");
+    navigate("/signin", { replace: true });
   }
 
   // Tela de loading enquanto é feita autorização
