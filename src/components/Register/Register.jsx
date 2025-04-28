@@ -45,6 +45,7 @@ export default function Register(props) {
                 className="input input_auth"
                 placeholder="E-mail"
                 spellCheck={false}
+                autoComplete="new-email"
                 required
               />
             </label>
@@ -57,6 +58,7 @@ export default function Register(props) {
                 className="input input_auth"
                 placeholder="Senha"
                 spellCheck={false}
+                autoComplete="new-password"
                 required
               />
             </label>
