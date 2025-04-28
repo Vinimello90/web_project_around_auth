@@ -114,6 +114,14 @@
   background: url("../images/like_icon_active.svg") center no-repeat;
 }
 
+.button_goto {
+  padding: 0;
+  font-size: 14px;
+  background-color: #000;
+  border: none;
+  color: #fff;
+}
+
 @media screen and (max-width: 590px) {
   .button {
     -webkit-tap-highlight-color: transparent;

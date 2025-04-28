@@ -26,15 +26,12 @@
 }
 
 .register__signin-text {
+  display: flex;
+  margin: 15px auto 0;
   font-size: 14px;
   text-align: center;
-}
-
-.register__signin-link {
-  margin-left: 4px;
-  text-decoration: none;
-  color: #fff;
-  transition: color linear 0.3s;
+  width: fit-content;
+  gap: 4px;
 }
 
 @media screen and (max-width: 590px) {
@@ -56,17 +53,5 @@
 
   .register__signin-link {
     -webkit-tap-highlight-color: transparent;
-  }
-}
-
-@media (hover: hover) {
-  .register__signin-link:hover {
-    color: #ffffff99;
-  }
-}
-
-@media (pointer: coarse) {
-  .register__signin-link:hover {
-    color: #fff;
   }
 }

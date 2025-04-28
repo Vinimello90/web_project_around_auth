@@ -26,19 +26,12 @@
 }
 
 .login__signup-text {
+  display: flex;
+  margin: 15px auto 0;
   font-size: 14px;
   text-align: center;
-}
-
-.login__signup-link {
-  margin-left: 4px;
-  text-decoration: none;
-  color: #fff;
-  transition: color linear 0.3s;
-}
-
-.login__signup-link:hover {
-  color: rgba(255, 255, 255, 0.6);
+  width: fit-content;
+  gap: 4px;
 }
 
 @media screen and (max-width: 590px) {
@@ -60,17 +53,5 @@
 
   .login__signup-link {
     -webkit-tap-highlight-color: transparent;
-  }
-}
-
-@media (hover: hover) {
-  .login__signup-link:hover {
-    color: #ffffff99;
-  }
-}
-
-@media (pointer: coarse) {
-  .login__signup-link:hover {
-    color: #fff;
   }
 }

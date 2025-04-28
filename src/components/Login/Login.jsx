@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Popup from "../Main/components/Popup/Popup";
 
 export default function Login(props) {
   const { formRef, onClosePopup, onSignIn, popup, isProcessing } = props;
 
+  const navigate = useNavigate();
+
   const [data, setData] = useState({ password: "", email: "" });
+
+  function handleSignUpClick() {
+    navigate("/signup", { replace: true });
+  }
 
   function handleOnChange(e) {
     const { name, value } = e.target;
@@ -68,9 +74,14 @@ export default function Login(props) {
         </form>
         <p className="login__signup-text">
           Ainda não é membro?
-          <Link to="/signup" className="login__signup-link">
+          <button
+            type="button"
+            onClick={handleSignUpClick}
+            to="/signup"
+            className="button button_goto"
+          >
             Inscreva-se aqui!
-          </Link>
+          </button>
         </p>
       </section>
       {popup && <Popup onClose={onClosePopup}>{popup.children}</Popup>}
