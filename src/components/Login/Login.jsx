@@ -13,16 +13,16 @@ export default function Login(props) {
     navigate("/signup", { replace: true });
   }
 
-  function handleOnChange(e) {
-    const { name, value } = e.target;
+  function handleOnChange(evt) {
+    const { name, value } = evt.target;
     setData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   }
 
-  function handleSubmitClick(e) {
-    e.preventDefault();
+  function handleSubmitClick(evt) {
+    evt.preventDefault();
     onSignIn(data);
   }
 

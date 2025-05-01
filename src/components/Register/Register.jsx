@@ -13,8 +13,8 @@ export default function Register(props) {
     navigate("/signin", { replace: true });
   }
 
-  function handleOnChange(e) {
-    const { name, value } = e.target;
+  function handleOnChange(evt) {
+    const { name, value } = evt.target;
     setData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -22,7 +22,7 @@ export default function Register(props) {
   }
 
   function handleSubmitClick(e) {
-    e.preventDefault();
+    evt.preventDefault();
     onSignUp(data);
   }
 

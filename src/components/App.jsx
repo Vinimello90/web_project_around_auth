@@ -31,7 +31,7 @@ export default function App() {
     return await auth.getCurrentUser(jwt);
   }
 
-  async function userAuthBFCacheHandler() {
+  async function handleUserAuthBFCache() {
     try {
       const jwt = getToken();
       if (jwt) {
@@ -66,10 +66,10 @@ export default function App() {
   }
 
   useEffect(() => {
-    window.addEventListener("pageshow", (e) => {
-      if (e.persisted) {
+    window.addEventListener("pageshow", (evt) => {
+      if (evt.persisted) {
         setIsLoading(true);
-        userAuthBFCacheHandler();
+        handleUserAuthBFCache();
       }
     });
     const jwt = getToken();
