@@ -189,6 +189,13 @@
     right: -30.21px;
   }
 
+  .button_add {
+    background-size: 16px;
+    margin: 36px auto 0;
+    width: 88.125vw;
+    max-width: 282px;
+  }
+
   .button_auth-submit {
     height: 46px;
   }
@@ -203,11 +210,8 @@
     margin-top: 0;
   }
 
-  .button_add {
-    background-size: 16px;
-    margin: 36px auto 0;
-    width: 88.125vw;
-    max-width: 282px;
+  .button_goto {
+    font-size: 12px;
   }
 }
 
