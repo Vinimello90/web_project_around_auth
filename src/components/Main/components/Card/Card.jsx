@@ -1,16 +1,26 @@
+import { useEffect, useState } from "react";
 import ImagePopup from "../Popup/components/ImagePopup/ImagePopup";
 import RemoveCard from "../Popup/components/RemoveCard/RemoveCard";
 
 export default function Card(props) {
-  const { name, link, isLiked, _id: id } = props.card;
+  const { name, link, likes, _id: id, owner } = props.card;
   const { onOpenPopup, onCardLike, onCardDelete } = props;
   const imagePopup = {
     type: "image",
     children: <ImagePopup name={name} link={link} />,
   };
 
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    if (likes.includes(owner)) {
+      setIsLiked(true);
+    }
+  }, []);
+
   function handleLikeClick() {
-    onCardLike(props.card);
+    setIsLiked(!isLiked);
+    onCardLike(isLiked, props.card);
   }
 
   const removeCard = {

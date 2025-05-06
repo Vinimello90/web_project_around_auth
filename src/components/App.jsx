@@ -140,9 +140,9 @@ export default function App() {
   }
 
   // Requisita o like do id do card selecionado
-  async function handleCardLike(card) {
+  async function handleCardLike(isLiked, card) {
     try {
-      const newCard = await api.editLikeStatus(card.isLiked, card._id);
+      const newCard = await api.editLikeStatus(isLiked, card._id);
       setCards((state) =>
         state.map((currentCard) =>
           currentCard._id === newCard._id ? newCard : currentCard
