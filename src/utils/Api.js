@@ -2,7 +2,7 @@ import { getToken } from "./token";
 
 // Classe Api é responsável por manipular os dados enviados e recebidos do perfil e dos cartões pela API
 class Api {
-  constructor(options, token) {
+  constructor(options) {
     // Constructor recebe o options do fetch como parâmetro
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -36,7 +36,6 @@ class Api {
   // Método público editLikeStatus() é responsável por enviar a solicitação para alterar o status do like utilizando e retornando o método fetch com os métodos de solicitações "PUT"
   // para adicionar "true" e "DELETE" para remover mudando para "false".
   editLikeStatus(isLiked, id) {
-    console.log(isLiked);
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: !isLiked ? "PUT" : "DELETE",
       headers: {

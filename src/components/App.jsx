@@ -26,50 +26,28 @@ export default function App() {
   const navigate = useNavigate();
   const formRef = useRef();
 
-  // Verifica o token do usuário atual
-  async function userAuth(jwt) {
-    return await auth.getCurrentUser(jwt);
-  }
-
-  async function handleUserAuthBFCache() {
-    try {
-      const jwt = getToken();
-      if (jwt) {
-        await userAuth(jwt);
-      } else {
-        throw new Error("token não encontrado");
-      }
-    } catch {
-      handleSignOut();
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  // Autentica o usuário para acessar a rota protegida e carrega os dados
   async function initializeSession(jwt) {
     try {
-      const currentUser = await userAuth(jwt);
+      const currentUser = await auth.getCurrentUser(jwt);
       const cards = await api.getInitialCards();
       setCurrentUser(currentUser);
-      setCards(cards);
       setIsLoggedIn(true);
+      setCards(cards);
+      setIsLoading(false);
     } catch (error) {
+      console.log(error);
       const errorPopup = { children: <InfoTooltip error={error} /> };
       setPopup(errorPopup); // monta a popup para exibir o erro
-      removeToken();
-    } finally {
-      setIsLoading(false);
+      if (error.status === 401) {
+        removeToken();
+        setIsLoggedIn(false);
+        setIsLoading(false);
+        return;
+      }
     }
   }
 
   useEffect(() => {
-    window.addEventListener("pageshow", (evt) => {
-      if (evt.persisted) {
-        setIsLoading(true);
-        handleUserAuthBFCache();
-      }
-    });
     const jwt = getToken();
     const browserWarning = CheckBrowserVersion(); // verifica a versão do navegador e retorna um componente caso verdadeiro
     if (jwt) {
@@ -77,7 +55,23 @@ export default function App() {
     } else {
       setIsLoading(false);
     }
+
     setPopup(browserWarning);
+
+    function handleBFCache(evt) {
+      if (evt.persisted) {
+        setIsLoading(true);
+        const refreshedJWT = getToken();
+        if (!refreshedJWT) {
+          window.location.reload();
+          return;
+        }
+        setIsLoading(false);
+      }
+    }
+
+    window.addEventListener("pageshow", handleBFCache);
+    return () => window.removeEventListener("pageshow", handleBFCache);
   }, []);
 
   function handleOpenPopup(popup) {
@@ -166,7 +160,7 @@ export default function App() {
       setTimeout(() => {
         setPopup("");
         navigate("/signin", { replace: true });
-      }, 1500);
+      }, 1000);
     } catch (error) {
       const errorPopup = { children: <InfoTooltip error={error} /> };
       setPopup(errorPopup);

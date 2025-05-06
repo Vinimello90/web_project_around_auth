@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Popup from "../Main/components/Popup/Popup";
 
 export default function Register(props) {
@@ -57,6 +57,7 @@ export default function Register(props) {
                 id="password"
                 className="input input_auth"
                 placeholder="Senha"
+                minLength={8}
                 spellCheck={false}
                 autoComplete="new-password"
                 required

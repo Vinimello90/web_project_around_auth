@@ -17,10 +17,8 @@ export default function InfoTooltip({ error, signIn = false, signUpSuccess }) {
   } else if (error?.status === UNAUTHORIZED_ERROR && !signIn) {
     errorMessage =
       "Sua sessão expirou! Por favor, faça login novamente para continuar.";
-  } else {
-    errorMessage =
-      error?.message ||
-      "Desculpe, algo deu errado! Tente novamente mais tarde.";
+  } else if (error.name === "TypeError") {
+    errorMessage = "Desculpe, algo deu errado! Tente novamente mais tarde.";
   }
 
   const imageSrc = error ? errorImg : successImg;
