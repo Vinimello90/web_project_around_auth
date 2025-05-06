@@ -21,7 +21,7 @@ export default function Register(props) {
     }));
   }
 
-  function handleSubmitClick(e) {
+  function handleSubmitClick(evt) {
     evt.preventDefault();
     onSignUp(data);
   }

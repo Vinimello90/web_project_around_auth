@@ -49,13 +49,11 @@ export default function App() {
   // Autentica o usuário para acessar a rota protegida e carrega os dados
   async function initializeSession(jwt) {
     try {
-      const authData = await userAuth(jwt);
-      const userData = await api.getUserInfo();
+      const currentUser = await userAuth(jwt);
       const cards = await api.getInitialCards();
-      const { data: currentUser } = authData;
-      setIsLoggedIn(true);
-      setCurrentUser({ ...userData, ...currentUser });
+      setCurrentUser(currentUser);
       setCards(cards);
+      setIsLoggedIn(true);
     } catch (error) {
       const errorPopup = { children: <InfoTooltip error={error} /> };
       setPopup(errorPopup); // monta a popup para exibir o erro

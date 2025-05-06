@@ -1,6 +1,8 @@
+import { getToken } from "./token";
+
 // Classe Api é responsável por manipular os dados enviados e recebidos do perfil e dos cartões pela API
 class Api {
-  constructor(options) {
+  constructor(options, token) {
     // Constructor recebe o options do fetch como parâmetro
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -14,7 +16,7 @@ class Api {
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
-        authorization: this._headers.authorization,
+        authorization: `Bearer ${getToken()}`,
       },
     }).then(this._checkResponse);
   }
@@ -23,7 +25,10 @@ class Api {
   addNewCard(data) {
     return fetch(`${this._baseUrl}/cards/`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     }).then(this._checkResponse);
   }
@@ -34,7 +39,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: !isLiked ? "PUT" : "DELETE",
       headers: {
-        authorization: this._headers.authorization,
+        authorization: `Bearer ${getToken()}`,
       },
     }).then(this._checkResponse);
   }
@@ -44,16 +49,8 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: {
-        authorization: this._headers.authorization,
-      },
-    }).then(this._checkResponse);
-  }
-
-  // Método público getUserInfo() é responsável por enviar a solicitação das informações do perfil do usuário utilizando e retornando o método fetch com o método de solicitação "GET"
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        authorization: this._headers.authorization,
+        authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json",
       },
     }).then(this._checkResponse);
   }
@@ -63,7 +60,10 @@ class Api {
   updateUserAvatar(user) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(user),
     }).then(this._checkResponse);
   }
@@ -72,16 +72,16 @@ class Api {
   updateUserInfo(userInfo) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        Accept: "aplication/json",
+        "Content-Type": "application/json",
+        authorization: `Bearer ${getToken()}`,
+      },
       body: JSON.stringify(userInfo),
     }).then(this._checkResponse);
   }
 }
 
 export const api = new Api({
-  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
-  headers: {
-    authorization: "3104c43f-5c52-4781-879f-672ac8ed2b72",
-    "Content-Type": "application/json",
-  },
+  baseUrl: "http://localhost:3001",
 });
