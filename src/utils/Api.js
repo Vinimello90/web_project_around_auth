@@ -36,6 +36,7 @@ class Api {
   // Método público editLikeStatus() é responsável por enviar a solicitação para alterar o status do like utilizando e retornando o método fetch com os métodos de solicitações "PUT"
   // para adicionar "true" e "DELETE" para remover mudando para "false".
   editLikeStatus(isLiked, id) {
+    console.log(isLiked);
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: !isLiked ? "PUT" : "DELETE",
       headers: {

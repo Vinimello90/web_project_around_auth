@@ -8,7 +8,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import NoCards from "./components/NoCards/NoCards";
 
 export default function Main(props) {
-  const { currentUserInfo } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
   const {
     onOpenPopup,
     onClosePopup,
@@ -37,7 +37,7 @@ export default function Main(props) {
       <section className="profile">
         <div className="profile__avatar-container">
           <img
-            src={currentUserInfo.avatar}
+            src={currentUser.avatar}
             alt="avatar"
             className="profile__avatar"
           />
@@ -50,7 +50,7 @@ export default function Main(props) {
         </div>
         <div className="profile__info">
           <div className="profile__name-button-container">
-            <h1 className="profile__name">{currentUserInfo.name}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               type="button"
               aria-label="Edit profile"
@@ -58,7 +58,7 @@ export default function Main(props) {
               onClick={() => onOpenPopup(editProfilePopup)}
             ></button>
           </div>
-          <p className="profile__job">{currentUserInfo.about}</p>
+          <p className="profile__job">{currentUser.about}</p>
         </div>
         <button
           type="button"

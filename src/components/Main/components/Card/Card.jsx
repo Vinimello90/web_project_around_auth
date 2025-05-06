@@ -1,25 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ImagePopup from "../Popup/components/ImagePopup/ImagePopup";
 import RemoveCard from "../Popup/components/RemoveCard/RemoveCard";
+import { CurrentUserContext } from "../../../../contexts/CurrentUserContext";
 
 export default function Card(props) {
-  const { name, link, likes, _id: id, owner } = props.card;
+  const { name, link, likes, _id: id, owner: ownerId } = props.card;
   const { onOpenPopup, onCardLike, onCardDelete } = props;
+  const { currentUser } = useContext(CurrentUserContext);
+
+  const [isLiked, setIsLiked] = useState(false);
+
   const imagePopup = {
     type: "image",
     children: <ImagePopup name={name} link={link} />,
   };
 
-  const [isLiked, setIsLiked] = useState(false);
-
   useEffect(() => {
-    if (likes.includes(owner)) {
-      setIsLiked(true);
-    }
-  }, []);
+    const includesCurrentUser = likes.includes(currentUser._id);
+    setIsLiked(includesCurrentUser);
+  }, [likes, currentUser._id]);
 
   function handleLikeClick() {
-    setIsLiked(!isLiked);
     onCardLike(isLiked, props.card);
   }
 
@@ -36,14 +37,14 @@ export default function Card(props) {
         className="card__image"
         onClick={() => onOpenPopup(imagePopup)}
       />
-      {
+      {currentUser._id === ownerId && (
         <button
           type="button"
           aria-label="Delete card"
           className="button button_remove"
           onClick={() => onOpenPopup(removeCard)}
         ></button>
-      }
+      )}
       <div className="card__title-container">
         <h2 className="card__title">{name}</h2>
         <button

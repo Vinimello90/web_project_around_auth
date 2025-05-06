@@ -215,7 +215,7 @@ export default function App() {
   return (
     <CurrentUserContext.Provider
       value={{
-        currentUserInfo: currentUser,
+        currentUser: currentUser,
         isLoggedIn,
         onUpdateUser: handleUpdateUser,
         onUpdateAvatar: handleUpdateAvatar,
