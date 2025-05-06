@@ -9,8 +9,7 @@ export default function EditProfile(props) {
     isSubmitting,
     onButtonLoading,
   } = props;
-  const { currentUserInfo: currentUser, onUpdateUser } =
-    useContext(CurrentUserContext);
+  const { currentUser, onUpdateUser } = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser.name);
   const [description, setDescription] = useState(currentUser.about);
 

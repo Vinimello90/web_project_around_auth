@@ -9,7 +9,7 @@ export default function EditAvatar(props) {
     isSubmitting,
     onButtonLoading,
   } = props;
-  const { currentUserInfo, onUpdateAvatar } = useContext(CurrentUserContext);
+  const { currentUser, onUpdateAvatar } = useContext(CurrentUserContext);
   const urlInputRef = useRef();
 
   function handleInputValidation(evt) {
@@ -45,7 +45,7 @@ export default function EditAvatar(props) {
             placeholder="Link de imagem"
             name="link"
             id="link"
-            defaultValue={currentUserInfo.avatar}
+            defaultValue={currentUser.avatar}
             required
           />
           <span
