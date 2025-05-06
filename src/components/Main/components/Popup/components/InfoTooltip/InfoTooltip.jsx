@@ -23,7 +23,7 @@ export default function InfoTooltip({ error, signIn = false, signUpSuccess }) {
       setMessage(
         "Sua sessão expirou! Por favor, faça login novamente para continuar."
       );
-    } else if (error.name === "TypeError") {
+    } else {
       setMessage("Desculpe, algo deu errado! Tente novamente mais tarde.");
     }
     setImageSrc(error ? errorImg : successImg);
