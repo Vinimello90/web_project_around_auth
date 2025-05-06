@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://api.aroundus.protechadvanced.com";
 
 function checkResponse(res) {
   return res.ok ? res.json() : Promise.reject(res);
