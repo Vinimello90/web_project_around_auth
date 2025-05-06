@@ -31,9 +31,9 @@ export default function AuthButton({ formRef, isMenuOpen, isMobile = false }) {
   if (isLoggedIn) {
     return (
       <div
-        className={`header__user${isMobile ? " header__user-mobile" : ""} ${
+        className={`header__user${isMobile ? " header__user-mobile" : ""}${
           displayMenu ? " header__user-mobile_show" : ""
-        } `}
+        }`}
       >
         <p className="header__e-mail">{currentUser.email}</p>
         <button
