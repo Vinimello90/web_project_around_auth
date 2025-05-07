@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.aroundus.protechadvanced.com";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function checkResponse(res) {
   return res.ok ? res.json() : Promise.reject(res);

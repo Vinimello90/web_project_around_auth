@@ -83,5 +83,5 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "https://api.aroundus.protechadvanced.com",
+  baseUrl: import.meta.env.VITE_API_BASE_URL,
 });
